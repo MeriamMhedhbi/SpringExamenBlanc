@@ -1,5 +1,6 @@
 package com.example.examenmodel.aspects;
 
+import org.aspectj.lang.annotation.AfterReturning;
 import org.springframework.stereotype.Component;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -16,7 +17,7 @@ public class LoggingAspect {
 
 
 
-    @After("execution( void com.example.examenmodel.services.*.assign*(..))")
+    @AfterReturning("execution( void com.example.examenmodel.services.*.assign*(..))")
     public void logMethodExit(JoinPoint joinPoint) {
 
         String name = joinPoint.getSignature().getName();

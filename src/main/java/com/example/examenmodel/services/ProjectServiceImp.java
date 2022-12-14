@@ -34,7 +34,7 @@ public class ProjectServiceImp implements ProjectServiceInterface {
     @Override
     @Transactional
     public Project addProject(Project project,Sprint sprint) {
-        //List<Sprint> sprints = sprintRepo.findAllByProjet(project);
+       //we need to save the project first then a boucle to affect echa print to project and cascade in the project
         sprint.setProjet(project);
         sprintRepo.save(sprint);
         return  projectRepo.save(project);
@@ -51,7 +51,7 @@ public class ProjectServiceImp implements ProjectServiceInterface {
 
     @Override
     public void assignProjectToClient(int ProjectId, String firstName, String LastName) {
-        User user = userRepo.getUserByFNameAndLName(firstName,LastName);
+        User user = userRepo.findByFirstNameAndLastName(firstName,LastName);
         Project project = projectRepo.findById(ProjectId).orElse(null);
 
         if(project!=null && user != null){
@@ -79,7 +79,7 @@ public class ProjectServiceImp implements ProjectServiceInterface {
 
     @Override
     public List<Project> getProjectsByScrumMaster(String fName, String lName) {
-        List<User> users = userRepo.getUserByFNameAndLNameAndRole(fName,lName, Role.Scrum_Master);
+        List<User> users = userRepo.findByFirstNameAndLastNameAndRole(fName,lName, Role.Scrum_Master);
         List<Project> projects = null;
         for (User u:users){
             projects.addAll(u.getProjects());
